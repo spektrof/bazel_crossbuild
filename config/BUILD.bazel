@@ -1,0 +1,4 @@
+package(default_visibility = ["//visibility:public"])
+
+config_setting(name = 'rhel7', constraint_values = ['@crossbuild//constraint:rhel7'])
+config_setting(name = 'rhel8', constraint_values = ['@crossbuild//constraint:rhel8'])

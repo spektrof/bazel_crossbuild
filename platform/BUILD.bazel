@@ -1,0 +1,20 @@
+package(default_visibility = ["//visibility:public"])
+
+platform(
+  name = 'rhel7',
+  constraint_values = [
+    '@platforms//os:linux',
+    '@platforms//cpu:x86_64',
+    '@crossbuild//constraint:rhel7',
+    '@crossbuild//constraint:host',
+  ],
+)
+
+platform(
+  name = 'rhel8',
+  constraint_values = [
+    '@platforms//os:linux',
+    '@platforms//cpu:x86_64',
+    '@crossbuild//constraint:rhel8',
+  ],
+)
