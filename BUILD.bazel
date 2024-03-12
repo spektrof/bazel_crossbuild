@@ -53,3 +53,19 @@ sh_test(name = "expecting_rhel7_exec_comp_no_remote_action", srcs = ["no_remote_
 
 sh_test(name = "expecting_rhel8_exec_comp_remote_action_no_exec_c", srcs = ["remote_action_no_exec_c"], tags = ["no-remote"])
 sh_test(name = "expecting_rhel7_exec_comp_no_remote_action_no_exec_c", srcs = ["no_remote_action_no_exec_c"], tags = ["no-remote"])
+
+test_suite(
+  name = "test_group1",
+  tests = [
+    "expecting_rhel8_exec_comp_remote_action_no_exec_c",
+    "expecting_rhel7_exec_comp_no_remote_action_no_exec_c",
+  ]
+)
+
+test_suite(
+  name = "test_group2",
+  tests = [
+    "expecting_rhel8_exec_comp_remote_action",
+    "expecting_rhel7_exec_comp_no_remote_action",
+  ]
+)
