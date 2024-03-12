@@ -7,15 +7,15 @@ build --incompatible_enable_cc_toolchain_resolution
 
 build:rhel7_host --host_platform @crossbuild//platform:rhel7
 build:rhel7 --platforms=@crossbuild//platform:rhel7
-build:rhel7 --remote_default_exec_properties=os=rhel7
+# build:rhel7 --remote_default_exec_properties=os=rhel7
 
 build:rhel8_host --host_platform @crossbuild//platform:rhel8
 build:rhel8 --platforms=@crossbuild//platform:rhel8
-build:rhel8 --remote_default_exec_properties=os=rhel8
+# build:rhel8 --remote_default_exec_properties=os=rhel8
 
 build:remote --remote_executor=<REMOTE_EXECUTOR>
 build:remote --remote_instance_name=<REMOTE_INSTANCE_NAME>
 build:remote --noremote_local_fallback
 
 # expect rhel7 host by default
-build --config=rhel7_host
+# build --config=rhel7_host

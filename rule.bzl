@@ -1,10 +1,7 @@
 
-def _has_no_remote_tag(tags):
+def _has_no_remote_tag(ctx):
   no_remote_tags = ["no-remote", "no-remote-exec"]
-  return not any([t in tags for t in no_remote_tags])
-
-def _has_no_remote_tag_from_ctx(ctx):
-  return _has_no_remote_tag(ctx.attr.tags)
+  return any([t in ctx.attr.tags for t in no_remote_tags])
 
 def _target_platform_to_exec_group(ctx):
   target_platform = ctx.fragments.platform.platform
@@ -17,7 +14,7 @@ def _intermediate_action_impl(ctx):
   intermediate_executable_name = ".bin/{}".format(ctx.attr.name)
   intermediate_executable = ctx.actions.declare_file(intermediate_executable_name)
  
-  exec_group = _target_platform_to_exec_group(ctx) if _has_no_remote_tag_from_ctx(ctx) else "host"
+  exec_group = "host" if _has_no_remote_tag(ctx) else _target_platform_to_exec_group(ctx)
 
   print("{} rule uses {} files, {} tags, {} exec_group ".format(ctx.attr.name, ctx.files.tool, ctx.attr.tags, exec_group))
 
@@ -45,7 +42,7 @@ def _create_intermediate_action_rule(cfg="exec"):
       "tool" : attr.label(
         mandatory=True,
         executable=True,
-        cfg="exec",
+        cfg=cfg,
       ),
     },
     exec_groups = {

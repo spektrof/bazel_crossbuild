@@ -1,2 +1,6 @@
 workspace(name="crossbuild")
 
+register_execution_platforms(
+  "@crossbuild//platform:rhel7",
+  "@crossbuild//platform:rhel8",
+)

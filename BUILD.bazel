@@ -29,13 +29,27 @@ intermediate_action(
 )
 
 intermediate_action(
+  name = "remote_action_no_exec_c",
+  tool = ":rhel8_tool",
+)
+
+intermediate_action(
   name = "no_remote_action",
   tool = ":rhel7_tool",
   tags = ["no-remote-exec"],
   exec_compatible_with = ["@crossbuild//constraint:host"],
 )
 
+intermediate_action(
+  name = "no_remote_action_no_exec_c",
+  tool = ":rhel7_tool",
+  tags = ["no-remote-exec"],
+)
+
 # Tests
 
 sh_test(name = "expecting_rhel8_exec_comp_remote_action", srcs = ["remote_action"], tags = ["no-remote"])
 sh_test(name = "expecting_rhel7_exec_comp_no_remote_action", srcs = ["no_remote_action"], tags = ["no-remote"])
+
+sh_test(name = "expecting_rhel8_exec_comp_remote_action_no_exec_c", srcs = ["remote_action_no_exec_c"], tags = ["no-remote"])
+sh_test(name = "expecting_rhel7_exec_comp_no_remote_action_no_exec_c", srcs = ["no_remote_action_no_exec_c"], tags = ["no-remote"])
