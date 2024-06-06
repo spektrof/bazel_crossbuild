@@ -14,9 +14,10 @@ def _intermediate_action_impl(ctx):
   intermediate_executable_name = ".bin/{}".format(ctx.attr.name)
   intermediate_executable = ctx.actions.declare_file(intermediate_executable_name)
  
-  exec_group = "host" if _has_no_remote_tag(ctx) else _target_platform_to_exec_group(ctx)
+  # check https://bazel.build/extending/auto-exec-groups whenever Bazel7+ is used
+  # exec_group = "host" if _has_no_remote_tag(ctx) else _target_platform_to_exec_group(ctx)
 
-  print("{} rule uses {} files, {} tags, {} exec_group ".format(ctx.attr.name, ctx.files.tool, ctx.attr.tags, exec_group))
+  print("{} rule uses {} files, {} tags".format(ctx.attr.name, ctx.files.tool, ctx.attr.tags))
 
   ctx.actions.run(
     inputs = [],
@@ -26,8 +27,11 @@ def _intermediate_action_impl(ctx):
     mnemonic = "InterAction",
     progress_message = "Run intermediate action for {}".format(ctx.attr.name),
     execution_requirements = {tag : '1' for tag in ctx.attr.tags},
-    exec_group = exec_group,
+    # exec_group = exec_group,
   )
+
+  # C++ actions are using rhel8 toolchain
+  # TODO: add analysis tests instead
 
   return DefaultInfo(
     files = depset([intermediate_executable]),
@@ -45,11 +49,12 @@ def _create_intermediate_action_rule(cfg="exec"):
         cfg=cfg,
       ),
     },
-    exec_groups = {
-      "host" :  exec_group(exec_compatible_with=["@crossbuild//constraint:host"]),
-      "rhel7" : exec_group(exec_compatible_with=["@crossbuild//constraint:rhel7"]),
-      "rhel8" : exec_group(exec_compatible_with=["@crossbuild//constraint:rhel8"]),
-    },
+    # see https://bazel.build/extending/auto-exec-groups
+    # exec_groups = {
+    #   "host" :  exec_group(exec_compatible_with=["@crossbuild//constraint:host_platform"]),
+    #   "rhel7" : exec_group(exec_compatible_with=["@crossbuild//constraint:rhel7"]),
+    #   "rhel8" : exec_group(exec_compatible_with=["@crossbuild//constraint:rhel8"]),
+    # },
     fragments = ["platform"],
   )
 

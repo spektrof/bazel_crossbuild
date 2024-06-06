@@ -25,7 +25,8 @@ sh_binary(
 intermediate_action(
   name = "remote_action",
   tool = ":rhel8_tool",
-  exec_compatible_with = ["@crossbuild//constraint:rhel8"],
+  # note: --extra_execution_platform is required to be set
+  # exec_compatible_with = ["@crossbuild//constraint:rhel8"],
 )
 
 intermediate_action(
@@ -37,7 +38,8 @@ intermediate_action(
   name = "no_remote_action",
   tool = ":rhel7_tool",
   tags = ["no-remote-exec"],
-  exec_compatible_with = ["@crossbuild//constraint:host"],
+  # note: it is enough to set host_platform
+  exec_compatible_with = ["@crossbuild//constraint:host_platform"],
 )
 
 intermediate_action(

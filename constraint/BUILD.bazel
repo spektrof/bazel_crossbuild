@@ -1,7 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
-constraint_setting(name = 'paltform_exec_group')
-constraint_value(name = 'host', constraint_setting = ':paltform_exec_group')
+constraint_setting(name = 'platform_kind')
+constraint_value(name = 'host_platform', constraint_setting = ':platform_kind')
+constraint_value(name = 'target_platform', constraint_setting = ':platform_kind')
 
 constraint_setting(name = 'platform')
 constraint_value(name = 'rhel7', constraint_setting = ':platform')

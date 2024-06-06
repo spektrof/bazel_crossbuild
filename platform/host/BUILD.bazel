@@ -1,0 +1,4 @@
+package(default_visibility = ["//visibility:public"])
+
+platform(name="rhel7_host", parents=["@crossbuild//platform:rhel7"], constraint_values=["@crossbuild//constraint:host_platform"])
+platform(name="rhel8_host", parents=["@crossbuild//platform:rhel8"], constraint_values=["@crossbuild//constraint:host_platform"])
